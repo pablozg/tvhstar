@@ -189,11 +189,11 @@ const utils = {
                     // Busco el mismo programa en cadenasREMOTE, para añadir su display_name como alternativo. 
                     // Este truco facilita el que Tvheadend asigne automáticamente el EPG de cada cadena
                     // al canal durante el proceso de creación de la Red->Muxes->Services->Channels en Tvheadend
-                    let indexAlt = progPreferences.cadenasREMOTE.findIndex(item => item.movistar_nombre === movistar_nombre);
-                    let display_name_alt = undefined;
-                    if (indexAlt !== -1) {
-                        display_name_alt = progPreferences.cadenasREMOTE[indexAlt].tvh_nombre;
-                    }
+                    //let indexAlt = progPreferences.cadenasREMOTE.findIndex(item => item.movistar_nombre === movistar_nombre);
+                    //let display_name_alt = undefined;
+                    //if (indexAlt !== -1) {
+                    //   display_name_alt = progPreferences.cadenasREMOTE[indexAlt].tvh_nombre;
+                    //}
 
                     // A pelo, el lenguaje siempre será 'es'
                     let langES = 'es';
@@ -222,14 +222,14 @@ const utils = {
                                 }
                             ]
                         };
-                        if (display_name_alt !== undefined && display_name !== display_name_alt) {
+                        /*if (display_name_alt !== undefined && display_name !== display_name_alt) {
                             channel["display-name"].push({
                                 "_": display_name_alt,
                                 "$": {
                                     "lang": langES
                                 }
                             });
-                        }
+                        }*/
                         jsontv.tv.channel.push(channel);
                         progPreferences.numChannels = progPreferences.numChannels + 1;
                     }
@@ -265,7 +265,17 @@ const utils = {
                     let subtitulo = pase.titulo[0];
 
                     // Pillo el título
-                    let lastIndex = pase.descripcion_corta[0].lastIndexOf(':');
+                    //let lastIndex = pase.descripcion_corta[0].lastIndexOf(':');
+                    // Si es Formula 1 solo cogemos hasta los primeros :
+                    //if (channel_id === "MVF1.es"){
+                    
+                    let lastIndex = pase.descripcion_corta[0].indexOf('(');
+                    if (lastIndex === -1) {
+                    
+                    	lastIndex = pase.descripcion_corta[0].indexOf(':');	
+                    }
+                                        
+                    
                     if (lastIndex !== -1) {
                         let newTitulo = pase.descripcion_corta[0].substr(0, lastIndex);
                         // Elimino espacios de delante o detrás 
@@ -275,7 +285,85 @@ const utils = {
                             titulo = newTitulo;
                         }
                     }
+                    
+                    //// Sacamos la temporada si existe                    
+                    let inicio_temp = pase.descripcion_corta[0].indexOf('(');
+                    let fin_temp = pase.descripcion_corta[0].indexOf(')');
+                    //let tamaño_temporada = (fin_temp - inicio_temp) - 1;
+                                        
+                    let newTemporada = ' ';
+                    
+                    if (inicio_temp !== -1){
+                    	
+	                    let temporada = pase.descripcion_corta[0].substr(inicio_temp + 1, fin_temp);
+	                    
+	                    temporada = temporada.trim();
+	                    
+	                    temporada = temporada.toLowerCase();
+	                    switch (true) {
 
+	                        // Temporada como Temp.
+	                        case /temp. /.test(temporada):
+	                            newTemporada = temporada.substr(6, temporada.length);
+	                            break;
+
+	                        // Temporada como Temp
+	                        case /temp /.test(temporada):
+	                            newTemporada = temporada.substr(5, temporada.length);
+	                            break;
+	                        default:
+	                        		// se comprueba si la cadena entre parentesis es un número
+	                        		/*if (temporada.length > 0 && temporada.length < 3){
+	                        			newTemporada = temporada.substr(0, temporada.length);
+	                        		}*/
+	                        		if (parseInt(temporada) > 0){
+	                        			newTemporada = temporada.substr(0, temporada.length);
+	                        		}
+	                            break;
+	                    }
+                  	}
+                  	
+                  	if (newTemporada !== ' ') newTemporada = parseInt(newTemporada) - 1;
+                  	
+                  	//// Sacamos el episodio si existe                    
+                    let inicio_episodio = pase.descripcion_corta[0].indexOf('Ep ');
+                    //let tamaño_episodio = pase.descripcion_corta[0].length - inicio_episodio - 3 - tamaño_temporada;
+                    
+                    let Episodio_num = ' ';
+                    
+                    if (inicio_episodio !== -1){
+                    	
+                    	let temp_episodio = pase.descripcion_corta[0].substr(inicio_episodio, pase.descripcion_corta[0].length);
+	                    
+	                    temp_episodio = temp_episodio.trim();
+	                    
+	                    temp_episodio = temp_episodio.toLowerCase();
+	                    switch (true) {
+
+	                        // Episodio como Ep
+	                        case /ep /.test(temp_episodio):
+	                            Episodio_num = temp_episodio.substr(temp_episodio.length - 2, temp_episodio.length);
+	                            break;
+
+	                        // Episodio como Episodio
+	                        case /episodio /.test(temp_episodio):
+	                            Episodio_num = temp_episodio.substr(9, temp_episodio.length);
+	                            break;
+	                        default:
+	                            break;
+	                    }
+                  	}
+                  	
+                  	if (Episodio_num !== ' ') Episodio_num = parseInt(Episodio_num) - 1;
+                  	
+                  	////////////// Generamos la información de episodio
+                  	////<episode-num system="xmltv_ns">2 . 9 . 0/1</episode-num>
+										
+										let episodio = ' ';
+										
+										if (newTemporada !== ' ' || Episodio_num !== ' '){
+											episodio = newTemporada.toString() + " . " + Episodio_num.toString() + " . 0/1";
+										}
 
                     // --------------------------------------------------------------------------
                     //  INICIO ZONA PERSONALIZADA !!!
@@ -423,6 +511,18 @@ const utils = {
                             }
                         ]
                     };
+                    
+                    // Añado el episodio en caso de estar definido
+                    if (episodio !== ' ') {
+                        programme['episode-num'] = [
+                            {
+                                "_": episodio,
+                                "$": {
+                                    "system": "xmltv_ns"
+                                }
+                            }
+                        ];
+                    }
 
                     // Salvo el puntero a este programme para poder
                     // añadirle el 'stop' cuando descubra el siguiente (start)
@@ -459,7 +559,7 @@ const utils = {
     // Convierto de formato JSONTV a XMLTV
     convierteJSONTVaXMLTV: function (datosJSONTV) {
         // Preparo el builder
-        let builder = new xml2js.Builder({ headless: true });
+        let builder = new xml2js.Builder({ headless: false }); //true
 
         // Devuelvo la Conversión
         return builder.buildObject(datosJSONTV);

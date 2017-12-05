@@ -34,12 +34,7 @@ const movistar = {
         arrayCadenas.push(cadena.movistar_id)
       }
     });
-    progPreferences.cadenasREMOTE.map(cadena => {
-      if (cadena.movistar_epg) {
-        arrayCadenas.push(cadena.movistar_id)
-      }
-    });
-
+    
     // Preparo la petición
     let options = {
       method: 'POST',

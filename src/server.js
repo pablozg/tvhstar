@@ -13,8 +13,8 @@ import Utils from './utils';
 import Movistar from './movistar';
 import CadenasHOME from './cadenasHOME';
 import CadenasHOME_din from './cadenasHOME_din';
-import CadenasREMOTE from './cadenasREMOTE';
-import CadenasREMOTE_din from './cadenasREMOTE_din';
+//import CadenasREMOTE from './cadenasREMOTE';
+//import CadenasREMOTE_din from './cadenasREMOTE_din';
 import fs from 'fs';
 
 // Timers
@@ -38,17 +38,17 @@ let progPreferences = {
 
   // Variable que apunta al array de cadenas SD que voy a usar
   // en los dispositivos Wifi para consumir menos ancho de banda. 
-  cadenasREMOTE: CadenasREMOTE,
+  //cadenasREMOTE: CadenasREMOTE,
   // Canales dinámicos que sobreescriben la fuente en el fichero m3u
-  cadenasREMOTE_din: CadenasREMOTE_din,
+  //cadenasREMOTE_din: CadenasREMOTE_din,
 
 
   // M3U: 
   // 
   // Nombre del fichero de salida donde dejaré la lista de canales IPTV de cadenasHOME.js
-  ficheroM3U_HOME: '/tmp/tvHOME.m3u',
+  ficheroM3U_HOME: '/home/hts/guia/tvHOME.m3u',
   // Nombre del fichero de salida donde dejaré la lista de canales IPTV de cadenasREMOTE.js
-  ficheroM3U_REMOTE: '/tmp/tvREMOTE.m3u',
+  //ficheroM3U_REMOTE: '/tmp/tvREMOTE.m3u',
 
   // Durante la creación del fichero ficheroM3U_HOME se pone la URL del canal, pero como 
   // tenemos dos opciones (UDP o TCP) a continuación debes modificar la siguiente
@@ -60,7 +60,7 @@ let progPreferences = {
   // Ejemplos con UDP y TCP: 
   // uri_prefix: 'rtp://@'
   // uri_prefix: 'http://x.x.x.x:yyy/udp/'
-  uri_prefix: 'http://192.168.100.1:4022/udp/',
+  uri_prefix: 'udp://@',
 
   // Respecto a XMLTV, el objetivo es crear un fichero XMLTV compatible con
   // "http://xmltv.cvs.sourceforge.net/viewvc/xmltv/xmltv/xmltv.dtd"
@@ -79,7 +79,7 @@ let progPreferences = {
   ficheroJSONTV: '/tmp/guia.movistar-xmltv.json',
   //
   // Fichero final:
-  ficheroXMLTV: '/home/luis/guia/guia.xml',
+  ficheroXMLTV: '/home/hts/guia/guia.xml',
 
   // 
   // El programa ejecutará una descarga del EPG nada más arrancar y se quedará 
@@ -90,8 +90,8 @@ let progPreferences = {
   // dos y las siete de la mañana. Si quieres afinar más, puedes poner el mismo 
   // valor a ambas variables pero te recomiendo dejarlo así, es una forma 
   // elegante de NO sobrecargar a los servidores de Movistar. 
-  horaInicio: 2,
-  horaFin: 6,
+  horaInicio: 8,
+  horaFin: 10,
 
   // Parámetros para hacer la solicitud a la Web de Movistar: 
   //
@@ -181,7 +181,7 @@ function sessionController() {
   creaFicheroM3U(progPreferences.cadenasHOME, progPreferences.cadenasHOME_din, progPreferences.ficheroM3U_HOME);
 
   // M3U cadenasHOME : 
-  creaFicheroM3U(progPreferences.cadenasREMOTE, progPreferences.cadenasREMOTE_din, progPreferences.ficheroM3U_REMOTE);
+  //creaFicheroM3U(progPreferences.cadenasREMOTE, progPreferences.cadenasREMOTE_din, progPreferences.ficheroM3U_REMOTE);
 
 
   // XMLTV: 
