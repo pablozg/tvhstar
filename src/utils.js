@@ -309,8 +309,10 @@ const utils = {
 						if (indexDosPuntos === -1){
 							subtitulo = pase.titulo[0];
 						} else {
+							
 							// Extraigo el Texto entre los : y el ;
 							subtitulo = pase.descripcion_corta[0].substring(indexDosPuntos + 1, indexPuntoComa);
+							
 							/// Eliminamos las referencias a (VOS), Ep XXX, Episodio XXXX, Ep. XXX, etc.
 							subtitulo = subtitulo.replace("(VOS)","");
 							subtitulo = subtitulo.replace(pase.descripcion_corta[0].match(/[eE]p [0-9]\d*/g),"");
@@ -318,10 +320,36 @@ const utils = {
 							subtitulo = subtitulo.replace(pase.descripcion_corta[0].match(/[eE]p[.][0-9]*.\d*/g),"");
 							subtitulo = subtitulo.trim();
 
-							// Comprobamos que el subtitulo original y el extraido no sean iguales, que el extraido no esté vacio
-							// y que no contenga otros dos puntos.
-							if (pase.titulo[0].localeCompare(subtitulo) !== 0 && subtitulo !== "" && subtitulo.indexOf(':') === -1){
-								subtitulo = subtitulo + ": " + pase.titulo[0];
+							if (subtitulo !== ""){
+
+								let resultadoComp = null;
+
+								// Creamos variables temporales en los valores en minúsculas
+								let tempSubtitulo = subtitulo.toLowerCase();
+								let tempPaseTitulo = pase.titulo[0].toLowerCase();
+
+								// Eliminamos cualquier caracter no alphanúmerico y los acentos
+
+								tempSubtitulo = tempSubtitulo.normalize('NFD')
+								.replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
+								.normalize()
+								.replace(/\W/g, '');
+
+								tempPaseTitulo = tempPaseTitulo.normalize('NFD')
+								.replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
+								.normalize()
+								.replace(/\W/g, '');
+
+								if (tempSubtitulo.length > tempPaseTitulo.length){
+									resultadoComp = tempSubtitulo.includes(tempPaseTitulo);
+								}else{
+									resultadoComp = tempPaseTitulo.includes(tempSubtitulo);
+								}
+
+								if (resultadoComp === false){
+									subtitulo = subtitulo + ": " + pase.titulo[0];
+								}
+
 							}else{
 								subtitulo = pase.titulo[0];
 							}
