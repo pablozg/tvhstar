@@ -262,118 +262,195 @@ const utils = {
 						// pase.titulo[0]: "subtítulo"
 						// (OJO que el título puede que tenga también ":")
 						let titulo = pase.descripcion_corta[0];
-						//let subtitulo = pase.titulo[0];
-						let subtitulo = null;
-						let newTitulo = pase.descripcion_corta[0];
+						let subtitulo = pase.titulo[0];
 
 						////////////////// Procesamos el Título //////////////////
 
-						// Buscamos la exitencia de ':'
-						let indexCaracter = pase.descripcion_corta[0].indexOf(':');
+						let indexCaracter = null;
+						let lastIndexCaracter = null;
 
-						if (indexCaracter !== -1){
-							newTitulo = newTitulo.substr(0, indexCaracter);
+						titulo = titulo.replace(/;/g," : ")
+						.replace(/-/g," - ")
+						.replace(/([\/\t]+(?=[\/\t])|^\s+|\s+$)/g, '')
+						.replace(/(\/(?=[a-zA-Z0-9]))/g, '$1 ')
+						.replace(/(\/(?![a-zA-Z0-9]))/g, ' $1')
+						.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, '')
+						.replace(/([\-\t]+(?=[\-\t])|^\s+|\s+$)/g, '')
+						.replace(/([\;\t]+(?=[\;\t])|^\s+|\s+$)/g, '')
+						.replace(/ [eE]p [0-9]\d*/g,"")
+						.replace(/ [eE]pisodio.[0-9]\d*/g,"")
+						.replace(/ [eE]p[.][0-9]*.\d*/g,"")
+						.replace(/ [tT][0-9]\d*/g,"")
+						.replace(/ \([tT]emp [0-9]\d*\)/g,"")
+						.replace(/ \([tT]emp\. [0-9]\d*\)/g,"")
+						.replace(/ [tT]emp [0-9]\d*/g,"")
+						.replace(/ [tT]emp\. [0-9]\d*/g,"")
+						.replace(/ [tT]emporada [0-9]\d*/g,"")
+						.replace(/ \([0-9]*\)/g,"")
+						.replace(/ [eE]pisode.[0-9]\d*/g,"")
+						.replace(/ [sS] [0-9]\d*/g,"")
+						.replace(/ [sS][0-9]\d*/g,"")
+						.replace(/ [sS]eason [0-9]\d*/g,"")
+						.replace(/\(VOS\)/g,"");
+
+						subtitulo = subtitulo.replace(/;/g," - ")
+						.replace(/-/g," - ")
+						.replace(/([\/\t]+(?=[\/\t])|^\s+|\s+$)/g, '')
+						.replace(/(\/(?=[a-zA-Z0-9]))/g, '$1 ')
+						.replace(/(\/(?![a-zA-Z0-9]))/g, ' $1')
+						.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, '')
+						.replace(/([\-\t]+(?=[\-\t])|^\s+|\s+$)/g, '')
+						.replace(/([\;\t]+(?=[\;\t])|^\s+|\s+$)/g, '');
+
+						let tempTitulo = titulo.toLowerCase();
+						let tempSubtitulo = subtitulo.toLowerCase();
+
+						// Eliminamos cualquier caracter no alphanúmerico y los acentos
+
+						tempSubtitulo = tempSubtitulo.normalize('NFD')
+						.replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
+						.normalize()
+						//.replace(/\W/g, ' ')
+						.replace(/\¿/g,"")
+						.replace(/\?/g,"")
+						.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, '');
+
+						tempTitulo = tempTitulo.normalize('NFD')
+						.replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
+						.normalize()
+						//.replace(/\W/g, ' ')
+						.replace(/\¿/g,"")
+						.replace(/\?/g,"")
+						.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, '');
+
+						// Si el subtitulo está incluido en el título
+
+						let newTitulo = titulo;
+						let newSubtitulo = subtitulo;
+
+						if (tempTitulo.includes(tempSubtitulo) == true && tempTitulo.length > tempSubtitulo.length){
+
+							// Buscamos primero el subtitulo en el titulo sin adaptar, si no se encuentra
+							// lo buscamos con el subtitulo y titulo adaptado
+							let inicioSubtitulo = titulo.indexOf(subtitulo);
+							if (inicioSubtitulo === -1) inicioSubtitulo = tempTitulo.indexOf(tempSubtitulo);
+
+							let firstDoubleDot = titulo.indexOf(':');
+							let subtituloInTitulo = "";
+
+							// Si el subtítulo comienza detrás de los primeros dos puntos.
+							if (inicioSubtitulo >= firstDoubleDot){
+								subtituloInTitulo = titulo.substring(inicioSubtitulo, titulo.length);
+								titulo = titulo.substr(0, inicioSubtitulo);
+							}else{
+								// Si el subtítulo al principio del título
+								subtituloInTitulo = titulo.substring(firstDoubleDot + 1, titulo.length);
+								titulo = titulo.substr(0, firstDoubleDot);
+							}
+
+							subtituloInTitulo = subtituloInTitulo.trim();
+							newSubtitulo = subtituloInTitulo;
+
+							if (titulo.indexOf(subtituloInTitulo) > 0) titulo = titulo.replace(subtitulo,"");
+
+						}else{
+
+							// Buscamos la exitencia de ':'
+							indexCaracter = titulo.indexOf(':');
+							if (indexCaracter === -1) indexCaracter = titulo.indexOf('-');
+							if (indexCaracter === -1) indexCaracter = titulo.length;
+
+							lastIndexCaracter = titulo.lastIndexOf(':');
+							if (lastIndexCaracter === -1) lastIndexCaracter = indexCaracter;
+
+							newTitulo = newTitulo.substr(0, lastIndexCaracter);
+
+							if (lastIndexCaracter !== titulo.length) newSubtitulo = titulo.substr(lastIndexCaracter + 1, titulo.length);
+
+							// Buscamos la exitencia de '('
+							indexCaracter = newTitulo.indexOf('(');
+
+							if (indexCaracter !== -1){
+								newTitulo = newTitulo.substr(0, indexCaracter);
+							}
+
+							// Buscamos la exitencia de ';'
+							indexCaracter = newTitulo.indexOf(';');
+
+							if (indexCaracter !== -1){
+								newTitulo = newTitulo.substr(0, indexCaracter);
+							}
+
+							// Buscamos la exitencia de '-'
+							indexCaracter = newTitulo.indexOf('-');
+
+							if (indexCaracter !== -1){
+								newTitulo = newTitulo.substr(0, indexCaracter);
+							}
+
+							// Si se la cedena newTitulo no esta vacía y es más corta que la original se procesa, en caso contrario se deja como está.
+							if (newTitulo.length < titulo.length) {
+
+								// Elimino espacios de delante o detrás
+								newTitulo = newTitulo.trim();
+								titulo = newTitulo;
+							}
+
 						}
 
-						// Buscamos la exitencia de '('
-						indexCaracter = newTitulo.indexOf('(');
+						// Si el subtitulo no está incluido en el título
 
-						if (indexCaracter !== -1){
-							newTitulo = newTitulo.substr(0, indexCaracter);
-						}
+						titulo = titulo.trim()
+						.replace(";","")
+						.replace(/-/g,"");
 
-						// Buscamos la exitencia de ';'
-						indexCaracter = newTitulo.indexOf(';');
+						newSubtitulo = newSubtitulo.trim();
 
-						if (indexCaracter !== -1){
-							newTitulo = newTitulo.substr(0, indexCaracter);
-						}
-
-						// Buscamos la exitencia de '-'
-						indexCaracter = newTitulo.indexOf('-');
-
-						if (indexCaracter !== -1){
-							newTitulo = newTitulo.substr(0, indexCaracter);
-						}
+						if (titulo.lastIndexOf(":") == titulo.length - 1) titulo = titulo.substring(0, titulo.length - 1);
 
 						////////////////// Procesamos el Subtítulo //////////////////
 
-						// Buscamos la exitencia de ':' en el título
-						let indexDosPuntos = pase.descripcion_corta[0].indexOf(':');
+						tempSubtitulo = subtitulo.replace(titulo,"");
 
-						// Buscamos la exitencia de ';' en el título
-						let indexPuntoComa = pase.descripcion_corta[0].indexOf(';');
+						if (tempSubtitulo !== ""){
 
-						if (indexPuntoComa === -1) indexPuntoComa = pase.descripcion_corta[0].length;
+							/// Eliminamos las referencias a (VOS), Ep XXX, Episodio XXXX, Ep. XXX, Temp XXX, etc.
 
-						if (indexDosPuntos === -1){
-							subtitulo = pase.titulo[0];
-						} else {
-							
-							// Extraigo el Texto entre los : y el ;
-							subtitulo = pase.descripcion_corta[0].substring(indexDosPuntos + 1, indexPuntoComa);
-							
-							/// Eliminamos las referencias a (VOS), Ep XXX, Episodio XXXX, Ep. XXX, etc.
-							subtitulo = subtitulo.replace("(VOS)","");
-							subtitulo = subtitulo.replace(pase.descripcion_corta[0].match(/[eE]p [0-9]\d*/g),"");
-							subtitulo = subtitulo.replace(pase.descripcion_corta[0].match(/[eE]pisodio.[0-9]\d*/g),"");
-							subtitulo = subtitulo.replace(pase.descripcion_corta[0].match(/[eE]p[.][0-9]*.\d*/g),"");
-							subtitulo = subtitulo.trim();
+							subtitulo = subtitulo.replace(titulo,"")
+							.replace(/[eE]p [0-9]\d*/g,"")
+							.replace(/[eE]p[.][0-9]*.\d*/g,"")
+							.replace(/[eE]pisodio.[0-9]\d*/g,"")
+							.replace(/[eE]pisode.[0-9]\d*/g,"")
+							.replace(/[tT][0-9]\d*/g,"")
+							.replace(/[tT]emporada [0-9]\d*/g,"")
+							.replace(/\([tT]emp [0-9]\d*\)/g,"")
+							.replace(/\([tT]emp\. [0-9]\d*\)/g,"")
+							.replace(/[tT]emp [0-9]\d*/g,"")
+							.replace(/[tT]emp\. [0-9]\d*/g,"")
+							.replace(/\([0-9]*\)/g,"")
+							.replace(/[sS] [0-9]\d*/g,"")
+							.replace(/[sS][0-9]\d*/g,"")
+							.replace(/[sS]eason [0-9]\d*/g,"")
+							.replace(/\(VOS\)/g,"")
+							.replace(";","")
+							.replace(":","")
+							.replace(/-/g,"")
+							.replace(/([\ \t]+(?=[\ \t])|^\s+|\s+$)/g, '')
+							.trim();
 
-							if (subtitulo !== ""){
-
-								let resultadoComp = null;
-
-								// Creamos variables temporales en los valores en minúsculas
-								let tempSubtitulo = subtitulo.toLowerCase();
-								let tempPaseTitulo = pase.titulo[0].toLowerCase();
-
-								// Eliminamos cualquier caracter no alphanúmerico y los acentos
-
-								tempSubtitulo = tempSubtitulo.normalize('NFD')
-								.replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
-								.normalize()
-								.replace(/\W/g, '');
-
-								tempPaseTitulo = tempPaseTitulo.normalize('NFD')
-								.replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
-								.normalize()
-								.replace(/\W/g, '');
-
-								if (tempSubtitulo.length > tempPaseTitulo.length){
-									resultadoComp = tempSubtitulo.includes(tempPaseTitulo);
-								}else{
-									resultadoComp = tempPaseTitulo.includes(tempSubtitulo);
-								}
-
-								if (resultadoComp === false){
-									subtitulo = subtitulo + ": " + pase.titulo[0];
-								}
-
+							if ((subtitulo === "" && newSubtitulo !== "") || (newSubtitulo.includes(subtitulo) == true && newSubtitulo.length > subtitulo.length)){
+								subtitulo = newSubtitulo;
 							}else{
-								subtitulo = pase.titulo[0];
+								if (pase.titulo[0].includes(subtitulo) == false || subtitulo === "") subtitulo = pase.titulo[0];
 							}
 						}
 
 						////////////////// Procesamos la Temporada y el capítulo //////////////////
 
-						let expresionTemporada = newTitulo.search(/[tT][0-9]\d*/g);
-
-						if (expresionTemporada !== -1){
-							newTitulo = newTitulo.substr(0, expresionTemporada);
-						}
-
-						// Si se la cedena newTitulo no esta vacía y es más corta que la original se procesa, en caso contrario se deja como está.
-						if (newTitulo.length < titulo.length) {
-
-							// Elimino espacios de delante o detrás
-							newTitulo = newTitulo.trim();
-							titulo = newTitulo;
-						}
-
 						// Sacamos la temporada si existe
 
 						let newTemporada = ' ';
+						let expresionTemporada = null;
 
 						// Buscamos la temporada en formato TXXXX
 						expresionTemporada = pase.descripcion_corta[0].match(/ [tT][0-9]\d*/g);
@@ -381,8 +458,23 @@ const utils = {
 						// Buscamos la temporada en formato Temp XXXX
 						if (expresionTemporada == null) expresionTemporada = pase.descripcion_corta[0].match(/[tT]emp [0-9]\d*/g);//[tT]emp.[0-9]\d*
 
+						// Buscamos la temporada en formato (Temp XXXX)
+						if (expresionTemporada == null) expresionTemporada = pase.descripcion_corta[0].match(/\([tT]emp [0-9]\d*\)/g);//[tT]emp.[0-9]\d*
+
 						// Buscamos la temporada en formato Temp. XXXX
 						if (expresionTemporada == null) expresionTemporada = pase.descripcion_corta[0].match(/[tT]emp\. [0-9]\d*/g);
+
+						// Buscamos la temporada en formato (Temp. XXXX)
+						if (expresionTemporada == null) expresionTemporada = pase.descripcion_corta[0].match(/\([tT]emp\. [0-9]\d*\)/g);
+
+						// Buscamos la temporada en formato (T XXXX)
+						if (expresionTemporada == null) expresionTemporada = pase.descripcion_corta[0].match(/[tT] [0-9]\d*/g);
+
+						// Buscamos la temporada en formato (TXXXX)
+						if (expresionTemporada == null) expresionTemporada = pase.descripcion_corta[0].match(/[tT][0-9]\d*/g);
+
+						// Buscamos la temporada en formato Season XXXX
+						if (expresionTemporada == null) expresionTemporada = pase.descripcion_corta[0].match(/[sS]eason [0-9]\d*/g);
 
 						// Buscamos la temporada en formato (XXXX), falta mejorar la expresión
 						if (expresionTemporada == null) expresionTemporada = pase.descripcion_corta[0].match(/\([0-9]*\)/g);
@@ -405,11 +497,17 @@ const utils = {
 						// Buscamos la temporada en formato Episodio XXXX
 						if (expresionCapitulo == null) expresionCapitulo = pase.descripcion_corta[0].match(/[eE]pisodio.[0-9]\d*/g);
 
+						// Buscamos la temporada en formato Episode XXXX
+						if (expresionCapitulo == null) expresionCapitulo = pase.descripcion_corta[0].match(/[eE]pisode.[0-9]\d*/g);
+
 						// Buscamos la temporada en formato Ep. XXXX
 						if (expresionCapitulo == null) expresionCapitulo = pase.descripcion_corta[0].match(/[eE]p[.][0-9]*.\d*/g);
 
 						// Si en el título no se incluye Episodio Buscamos en el subtitulo en formato Episodio XXXX
 						if (expresionCapitulo == null) expresionCapitulo = pase.titulo[0].match(/[eE]pisodio.[0-9]\d*/g);
+
+						// Si en el título no se incluye Episodio Buscamos en el subtitulo en formato Episode XXXX
+						if (expresionCapitulo == null) expresionCapitulo = pase.titulo[0].match(/[eE]pisode.[0-9]\d*/g);
 
 						// Extraemos los números de la cadena
 						if (expresionCapitulo !== null)
@@ -433,7 +531,7 @@ const utils = {
 							// Comprobamos que efectivamente es una temporada y no un año midiendo su logitud
 							if (newTemporada.length < 2){
 
-								if (newCapitulo === ' ')  pase.sinopsis_larga[0] = " - " + pase.sinopsis_larga[0];
+								if (newCapitulo === ' ')  pase.sinopsis_larga[0] = "- " + pase.sinopsis_larga[0];
 								pase.sinopsis_larga[0] = "Temporada " + newTemporada + " " + pase.sinopsis_larga[0];
 								newTemporada = parseInt(newTemporada) - 1;
 							}else{
