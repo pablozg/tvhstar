@@ -145,7 +145,7 @@ const utils = {
 			let jsontv = {
 				tv: {
 					"$": {
-						"generator-info-name": 'byLuisPa, modded by pablozg',
+						"generator-info-name": 'byLuisPa',
 					},
 					channel: [],
 					programme: []
@@ -287,7 +287,6 @@ const utils = {
 						.replace(/ [tT]emp\. [0-9]\d*/g,"")
 						.replace(/ [tT]emporada [0-9]\d*/g,"")
 						.replace(/ \([0-9]*\)/g,"")
-						.replace(/ [0-9]\.(?![0-9])/g,"")
 						.replace(/ [eE]pisode.[0-9]\d*/g,"")
 						.replace(/ [sS] [0-9]\d*/g,"")
 						.replace(/ [sS][0-9]\d*/g,"")
@@ -336,30 +335,21 @@ const utils = {
 							let inicioSubtitulo = titulo.indexOf(subtitulo);
 							if (inicioSubtitulo === -1) inicioSubtitulo = tempTitulo.indexOf(tempSubtitulo);
 
-							var subSymbol = [":", "("];
-							let firstDoubleDot = null;
-
-							for (let i=0; i<=subSymbol.length; i++){
-								firstDoubleDot = titulo.indexOf(subSymbol[i]);
-								if (firstDoubleDot !== -1) i = subSymbol.length + 1;
-							}
-
+							let firstDoubleDot = titulo.indexOf(':');
 							let subtituloInTitulo = "";
 
 							// Si el subtítulo comienza detrás de los primeros dos puntos.
-							if (inicioSubtitulo >= firstDoubleDot && inicioSubtitulo > 0){
+							if (inicioSubtitulo >= firstDoubleDot){
 								subtituloInTitulo = titulo.substring(inicioSubtitulo, titulo.length);
 								titulo = titulo.substr(0, inicioSubtitulo);
 							}else{
 								// Si el subtítulo al principio del título
-								if (firstDoubleDot !== -1){
-									subtituloInTitulo = titulo.substring(firstDoubleDot + 1, titulo.length);
-									titulo = titulo.substr(0, firstDoubleDot);
-								}
+								subtituloInTitulo = titulo.substring(firstDoubleDot + 1, titulo.length);
+								titulo = titulo.substr(0, firstDoubleDot);
 							}
 
-							newSubtitulo = subtituloInTitulo.replace(")","")
-							.trim();
+							subtituloInTitulo = subtituloInTitulo.trim();
+							newSubtitulo = subtituloInTitulo;
 
 							if (titulo.indexOf(subtituloInTitulo) > 0) titulo = titulo.replace(subtitulo,"");
 
@@ -441,7 +431,7 @@ const utils = {
 							.replace(/[sS] [0-9]\d*/g,"")
 							.replace(/[sS][0-9]\d*/g,"")
 							.replace(/[sS]eason [0-9]\d*/g,"")
-							.replace("(VOS)","")
+							.replace(/\(VOS\)/g,"")
 							.replace(";","")
 							.replace(":","")
 							.replace(/-/g,"")
@@ -453,10 +443,6 @@ const utils = {
 							}else{
 								if (pase.titulo[0].includes(subtitulo) == false || subtitulo === "") subtitulo = pase.titulo[0];
 							}
-
-
-						}else{
-							if (newSubtitulo !== "" && subtitulo === titulo) subtitulo = newSubtitulo;
 						}
 
 						////////////////// Procesamos la Temporada y el capítulo //////////////////
@@ -470,10 +456,10 @@ const utils = {
 						expresionTemporada = pase.descripcion_corta[0].match(/ [tT][0-9]\d*/g);
 
 						// Buscamos la temporada en formato Temp XXXX
-						if (expresionTemporada == null) expresionTemporada = pase.descripcion_corta[0].match(/[tT]emp [0-9]\d*/g);
+						if (expresionTemporada == null) expresionTemporada = pase.descripcion_corta[0].match(/[tT]emp [0-9]\d*/g);//[tT]emp.[0-9]\d*
 
 						// Buscamos la temporada en formato (Temp XXXX)
-						if (expresionTemporada == null) expresionTemporada = pase.descripcion_corta[0].match(/\([tT]emp [0-9]\d*\)/g);
+						if (expresionTemporada == null) expresionTemporada = pase.descripcion_corta[0].match(/\([tT]emp [0-9]\d*\)/g);//[tT]emp.[0-9]\d*
 
 						// Buscamos la temporada en formato Temp. XXXX
 						if (expresionTemporada == null) expresionTemporada = pase.descripcion_corta[0].match(/[tT]emp\. [0-9]\d*/g);
@@ -490,7 +476,7 @@ const utils = {
 						// Buscamos la temporada en formato Season XXXX
 						if (expresionTemporada == null) expresionTemporada = pase.descripcion_corta[0].match(/[sS]eason [0-9]\d*/g);
 
-						// Buscamos la temporada en formato (XXXX)
+						// Buscamos la temporada en formato (XXXX), falta mejorar la expresión
 						if (expresionTemporada == null) expresionTemporada = pase.descripcion_corta[0].match(/\([0-9]*\)/g);
 
 						// Extraemos los números de la cadena
@@ -508,26 +494,20 @@ const utils = {
 
 						if (expresionCapitulo !== null) ultimosDigitos = true;
 
-						// Buscamos el episodio en formato Episodio XXXX
+						// Buscamos la temporada en formato Episodio XXXX
 						if (expresionCapitulo == null) expresionCapitulo = pase.descripcion_corta[0].match(/[eE]pisodio.[0-9]\d*/g);
 
-						// Buscamos el episodio en formato Episode XXXX
+						// Buscamos la temporada en formato Episode XXXX
 						if (expresionCapitulo == null) expresionCapitulo = pase.descripcion_corta[0].match(/[eE]pisode.[0-9]\d*/g);
 
-						// Buscamos el episodio en formato Ep. XXXX
+						// Buscamos la temporada en formato Ep. XXXX
 						if (expresionCapitulo == null) expresionCapitulo = pase.descripcion_corta[0].match(/[eE]p[.][0-9]*.\d*/g);
-
-						// Buscamos el episodio en formato XXXX.
-						if (expresionCapitulo == null) expresionCapitulo = pase.descripcion_corta[0].match(/[0-9]\.(?![0-9])/g);
 
 						// Si en el título no se incluye Episodio Buscamos en el subtitulo en formato Episodio XXXX
 						if (expresionCapitulo == null) expresionCapitulo = pase.titulo[0].match(/[eE]pisodio.[0-9]\d*/g);
 
 						// Si en el título no se incluye Episodio Buscamos en el subtitulo en formato Episode XXXX
 						if (expresionCapitulo == null) expresionCapitulo = pase.titulo[0].match(/[eE]pisode.[0-9]\d*/g);
-
-						// Si en el título no se incluye Episodio Buscamos en el subtitulo en formato XXXX.
-						if (expresionCapitulo == null) expresionCapitulo = pase.titulo[0].match(/[0-9]\.(?![0-9])/g);
 
 						// Extraemos los números de la cadena
 						if (expresionCapitulo !== null)
