@@ -1513,6 +1513,28 @@ const cadenasFavoritos = [
 	"tvh_m3u": false,
 	"tvh_nombre": "Aragón TV Int",
 	"tvh_tag": "SD|Favoritos"
+},
+{
+	"movistar_epg": true,
+	"movistar_fuente": "239.120.5.251:8208",
+	"movistar_id": "MDISNE",
+	"movistar_nombre": "M. Disney",
+	"movistar_numero": "109",
+	"tvh_id": "MDISNE.es",
+	"tvh_m3u": false,
+	"tvh_nombre": "Movistar Disney",
+	"tvh_tag": "Dibujos"
+},
+{
+	"movistar_epg": true,
+	"movistar_fuente": "239.120.5.250:8208",
+	"movistar_id": "ESPORT",
+	"movistar_nombre": "M. eSports",
+	"movistar_numero": "62",
+	"tvh_id": "ESPORT.es",
+	"tvh_m3u": false,
+	"tvh_nombre": "Movistar eSports",
+	"tvh_tag": ""
 }
 ];
 
