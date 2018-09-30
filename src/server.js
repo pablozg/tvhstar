@@ -46,7 +46,7 @@ let progPreferences = {
 	// M3U:
 	//
 	// Nombre del fichero de salida donde dejaré la lista de canales IPTV de cadenasHOME.js
-	ficheroM3U_HOME: '/home/hts/guia/tvHOME.m3u',
+	ficheroM3U_HOME: '/home/hts/guia/tvmovistar.m3u',
 	// Nombre del fichero de salida donde dejaré la lista de canales IPTV de cadenasREMOTE.js
 	//ficheroM3U_REMOTE: '/tmp/tvREMOTE.m3u',
 
@@ -79,7 +79,7 @@ let progPreferences = {
 	ficheroJSONTV: '/tmp/guia.movistar-xmltv.json',
 	//
 	// Fichero final:
-	ficheroXMLTV: '/home/hts/guia/guia.xml',
+	ficheroXMLTV: '/home/hts/guia/guiamovistar.xml',
 
 	//
 	// El programa ejecutará una descarga del EPG nada más arrancar y se quedará
@@ -99,8 +99,10 @@ let progPreferences = {
 	// dias: número de días de EPG que vamos a solicitar. Nota: he configurado
 	//       hardcoded que el máximo aceptado sean 7 (para no cargar a los
 	//       servidores de movistar).
-	urlMovistar: 'http://comunicacion.movistarplus.es/guiaProgramacion/exportar',
-	dias: 11,
+	//urlMovistar: 'http://comunicacion.movistarplus.es/guiaProgramacion/exportar',
+	urlMovistar: 'http://comunicacion.movistarplus.es/wp-admin/admin-post.php',
+
+	dias: 10,
 
 	// Gestión sobre cuando toca el siguiente ciclo de descarga.
 	nextRunDate: 0,
@@ -113,6 +115,12 @@ let progPreferences = {
 	// Gestión interna, permite controlar que mientras que haya una conversión
 	// en curso no se saldrá del programa.
 	isConversionRunning: false,
+
+	// Bandera para generar el m3u si encuentra algún canal con el true
+	generaM3U: false,
+
+	// Desactiva o activa el temporidador para usarlo como servicio
+	modoCron: true,
 
 	// Modo desarrollador (asume que ya se ha descargado el EPG),
 	developerMode: false, // Cambiar a 'false' en producción.
@@ -168,6 +176,7 @@ function creaFicheroM3U (cadenas, cadenas_din, ficheroM3U) {
 
 }
 
+
 // =========================================================
 // Método principal
 // =========================================================
@@ -178,11 +187,9 @@ function sessionController() {
 	clearInterval(timerSessionController);
 
 	// M3U cadenasHOME :
-	creaFicheroM3U(progPreferences.cadenasHOME, progPreferences.cadenasHOME_din, progPreferences.ficheroM3U_HOME);
-
-	// M3U cadenasHOME :
-	//creaFicheroM3U(progPreferences.cadenasREMOTE, progPreferences.cadenasREMOTE_din, progPreferences.ficheroM3U_REMOTE);
-
+	if (progPreferences.generaM3U){
+		creaFicheroM3U(progPreferences.cadenasHOME, progPreferences.cadenasHOME_din, progPreferences.ficheroM3U_HOME);
+	}
 
 	// XMLTV:
 	//
@@ -192,6 +199,7 @@ function sessionController() {
 	progPreferences.diasInicioFin = Utils.fechaInicioFin(progPreferences.dias);
 	progPreferences.nextRunDate = Utils.horaAleatoriaTomorrow(progPreferences.horaInicio, progPreferences.horaFin);
 	progPreferences.nextRunMilisegundos = progPreferences.nextRunDate - ahora;
+
 	if (progPreferences.nextRunMilisegundos < 0) {
 		progPreferences.nextRunMilisegundos += 86400000; // dentro de 24h si algo falla
 	}
@@ -204,6 +212,7 @@ function sessionController() {
 		console.log(`1 - Descarga del EPG XML Movistar`);
 		console.log(`  => PORT ${progPreferences.urlMovistar}`);
 		console.log(`  => EPG ${progPreferences.diasInicioFin.fechaInicio} -> ${progPreferences.diasInicioFin.fechaFin}`);
+
 		Movistar.requestEPG(progPreferences)
 		.then((response) => {
 			console.log(`  => Salvando los datos en el fichero ${progPreferences.ficheroXML}`);
@@ -234,6 +243,7 @@ function sessionController() {
 function conversionCompletaDeEPGaXMLTV() {
 	progPreferences.isConversionRunning = true;
 	console.log(`1 - Descarga del EPG XML Movistar - OK`);
+	
 	// 2 Convertir de formato XML entregado por Movistar a formato JSON intermedio
 	Utils.convierteXMLaJSON(progPreferences.ficheroXML)
 	.then((datosJSON) => {
@@ -250,6 +260,14 @@ function conversionCompletaDeEPGaXMLTV() {
 				console.log(`5 - Convierte JSON(movistar) a JSONTV`);
 				let datosJSONTV = Utils.convierteJSONaJSONTV(progPreferences, datosJSON);
 				console.log(`5 - Convierte JSON(movistar) a JSONTV - OK`);
+
+				console.log(`6 - Ordenando los datos del JSONTV`);
+
+				// Ordeno primero el listado de canales
+				datosJSONTV.tv.channel.sort((a, b) => a.$.id.localeCompare(b.$.id));
+
+				// Ordeno despues los programas por canal y fecha
+				datosJSONTV.tv.programme.sort((a, b) => a.$.channel.localeCompare(b.$.channel) || a.$.start.localeCompare(b.$.start));
 
 				console.log(`6 - Salva JSONTV ${progPreferences.ficheroJSONTV}`);
 				fs.writeFile(progPreferences.ficheroJSONTV, JSON.stringify(datosJSONTV, null, 2), function (error) {
@@ -315,10 +333,12 @@ function monitorConversion() {
 		// Si la conversión termino (con error o correctamente)
 		// programo que el session controller se ejecute cuando
 		// le toca...
-		console.log(`Programo próxima descarga para el: ${JSON.stringify(progPreferences.nextRunDate.toString())} quedan ${Utils.convertirTiempo(progPreferences.nextRunMilisegundos)}`);
-		timerSessionController = setInterval(function () {
-			sessionController();
-		}, progPreferences.nextRunMilisegundos);
+		if (progPreferences.modoCron === false){
+			console.log(`Programo próxima descarga para el: ${JSON.stringify(progPreferences.nextRunDate.toString())} quedan ${Utils.convertirTiempo(progPreferences.nextRunMilisegundos)}`);
+			timerSessionController = setInterval(function () {
+				sessionController();
+			}, progPreferences.nextRunMilisegundos);
+		}
 	} else {
 		// log
 		// console.log(`Monitor: La conversión se está ejecutando`);
@@ -341,4 +361,3 @@ function monitorConversion() {
 timerSessionController = setInterval(function () {
 	sessionController();
 }, 10);
-

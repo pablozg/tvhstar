@@ -60,7 +60,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.192:58192",
 	"movistar_id": "TVE",
 	"movistar_nombre": "LA 1",
@@ -71,7 +71,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.162:58162",
 	"movistar_id": "LA2",
 	"movistar_nombre": "LA 2",
@@ -82,7 +82,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.145:58145",
 	"movistar_id": "A3",
 	"movistar_nombre": "Antena 3",
@@ -93,7 +93,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.156:58156",
 	"movistar_id": "C4",
 	"movistar_nombre": "Cuatro",
@@ -104,7 +104,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.155:58155",
 	"movistar_id": "T5",
 	"movistar_nombre": "Telecinco",
@@ -115,7 +115,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.147:58147",
 	"movistar_id": "SEXTA",
 	"movistar_nombre": "La Sexta",
@@ -126,7 +126,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.5.187:8208",
 	"movistar_id": "MV3",
 	"movistar_nombre": "#0",
@@ -170,7 +170,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.5.250:8208",
 	"movistar_id": "CPSER",
 	"movistar_nombre": "Movistar Series",
@@ -181,7 +181,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.5.83:8208",
 	"movistar_id": "MV2",
 	"movistar_nombre": "Movistar Series Xtra",
@@ -192,7 +192,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "231.0.0.116:1234",
 	"movistar_id": "FOXGE",
 	"movistar_nombre": "Fox",
@@ -225,7 +225,7 @@ const cadenasFavoritos = [
 	"tvh_tag": ""
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "231.0.0.113:1234",
 	"movistar_id": "PCM",
 	"movistar_nombre": "Comedy Central",
@@ -236,7 +236,7 @@ const cadenasFavoritos = [
 	"tvh_tag": ""
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "231.0.0.107:1234",
 	"movistar_id": "CL13",
 	"movistar_nombre": "Calle 13",
@@ -247,7 +247,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "231.0.0.119:1234",
 	"movistar_id": "COSMO",
 	"movistar_nombre": "COSMO",
@@ -258,7 +258,7 @@ const cadenasFavoritos = [
 	"tvh_tag": ""
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.9.132:8208",
 	"movistar_id": "AMC",
 	"movistar_nombre": "AMC",
@@ -269,7 +269,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "231.0.0.109:1234",
 	"movistar_id": "FOXCR",
 	"movistar_nombre": "Fox Life",
@@ -280,7 +280,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.5.79:8208",
 	"movistar_id": "SET",
 	"movistar_nombre": "AXN White",
@@ -291,7 +291,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "231.0.0.120:1234",
 	"movistar_id": "SCI-FI",
 	"movistar_nombre": "SYFY",
@@ -324,7 +324,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "SD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.153:58153",
 	"movistar_id": "FDFIC",
 	"movistar_nombre": "Factoría de Ficción",
@@ -335,7 +335,7 @@ const cadenasFavoritos = [
 	"tvh_tag": ""
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.149:58149",
 	"movistar_id": "NEOX",
 	"movistar_nombre": "Neox",
@@ -346,7 +346,7 @@ const cadenasFavoritos = [
 	"tvh_tag": ""
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.194:58194",
 	"movistar_id": "ATRESS",
 	"movistar_nombre": "Atreseries",
@@ -357,7 +357,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.166:58166",
 	"movistar_id": "ENERGY",
 	"movistar_nombre": "Energy",
@@ -379,7 +379,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "SD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.5.111:8208",
 	"movistar_id": "MV1",
 	"movistar_nombre": "Movistar Estrenos",
@@ -390,7 +390,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.5.112:8208",
 	"movistar_id": "CPXTRA",
 	"movistar_nombre": "Movistar Xtra",
@@ -401,7 +401,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.5.113:8208",
 	"movistar_id": "CPACCI",
 	"movistar_nombre": "Movistar Acción",
@@ -412,7 +412,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.5.114:8208",
 	"movistar_id": "CPCOME",
 	"movistar_nombre": "Movistar Comedia",
@@ -423,7 +423,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.5.115:8208",
 	"movistar_id": "CPCOLE",
 	"movistar_nombre": "Movistar DCine",
@@ -445,7 +445,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "231.0.0.112:1234",
 	"movistar_id": "TCM",
 	"movistar_nombre": "TCM",
@@ -456,7 +456,7 @@ const cadenasFavoritos = [
 	"tvh_tag": ""
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.5.76:8208",
 	"movistar_id": "HOLLYW",
 	"movistar_nombre": "Hollywood",
@@ -467,7 +467,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.5.72:8208",
 	"movistar_id": "SUNDAN",
 	"movistar_nombre": "Sundance",
@@ -500,7 +500,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "SD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.121:58121",
 	"movistar_id": "TEN",
 	"movistar_nombre": "TEN",
@@ -511,7 +511,7 @@ const cadenasFavoritos = [
 	"tvh_tag": ""
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.158:58158",
 	"movistar_id": "PARCH",
 	"movistar_nombre": "Paramount Channel",
@@ -654,7 +654,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.5.248:8208",
 	"movistar_id": "CPDEP",
 	"movistar_nombre": "Movistar Deportes 1",
@@ -666,7 +666,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.5.245:8208",
 	"movistar_id": "CPD2",
 	"movistar_nombre": "Movistar Deportes 2",
@@ -678,7 +678,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.5.246:8208",
 	"movistar_id": "MVF1",
 	"movistar_nombre": "Movistar Fórmula 1",
@@ -690,7 +690,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.5.107:8208",
 	"movistar_id": "MVMTGP",
 	"movistar_nombre": "Movistar Moto GP",
@@ -714,7 +714,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "231.0.0.106:1234",
 	"movistar_id": "ESP",
 	"movistar_nombre": "Eurosport 1",
@@ -726,7 +726,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "231.0.0.44:1234",
 	"movistar_id": "ESP2",
 	"movistar_nombre": "Eurosport 2",
@@ -809,7 +809,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "231.0.0.125:1234",
 	"movistar_id": "NATGEO",
 	"movistar_nombre": "National Geographic",
@@ -821,7 +821,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "231.0.0.118:1234",
 	"movistar_id": "NATGW",
 	"movistar_nombre": "Nat Geo Wild",
@@ -833,7 +833,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.0.19:8208",
 	"movistar_id": "HIST",
 	"movistar_nombre": "Historia",
@@ -845,7 +845,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "SD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "231.0.0.127:1234",
 	"movistar_id": "DCR",
 	"movistar_nombre": "Discovery",
@@ -857,7 +857,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.5.82:8208",
 	"movistar_id": "ODISEA",
 	"movistar_nombre": "Odisea",
@@ -868,7 +868,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Canales HD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.0.38:8208",
 	"movistar_id": "BIOGRA",
 	"movistar_nombre": "A&E",
@@ -879,7 +879,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "SD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "231.0.0.115:1234",
 	"movistar_id": "VJR",
 	"movistar_nombre": "Viajar",
@@ -891,20 +891,20 @@ const cadenasFavoritos = [
 	"tvh_tag": ""
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.159:58159",
 	"movistar_id": "DCRMAX",
-	"movistar_nombre": "Discovery Max",
+	"movistar_nombre": "DMax",
 	"movistar_numero": "77",
 	"tvh_categoria": "Arts / Culture (without music)",
 	"tvh_categoria": "Education / Science / Factual topics",
 	"tvh_id": "DCRMAX.es",
 	"tvh_m3u": true,
-	"tvh_nombre": "Discovery Max",
+	"tvh_nombre": "DMax",
 	"tvh_tag": "Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.0.57:8208",
 	"movistar_id": "CYM",
 	"movistar_nombre": "Crimen + Investigación",
@@ -926,7 +926,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "SD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.0.27:8208",
 	"movistar_id": "CACOC",
 	"movistar_nombre": "Canal Cocina",
@@ -938,7 +938,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "SD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.0.71:8208",
 	"movistar_id": "DECASA",
 	"movistar_nombre": "Canal Decasa",
@@ -949,7 +949,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "SD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.200:58200",
 	"movistar_id": "DKISS",
 	"movistar_nombre": "DKISS",
@@ -960,7 +960,7 @@ const cadenasFavoritos = [
 	"tvh_tag": ""
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.154:58154",
 	"movistar_id": "DIVINI",
 	"movistar_nombre": "Divinity",
@@ -971,7 +971,7 @@ const cadenasFavoritos = [
 	"tvh_tag": ""
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.150:58150",
 	"movistar_id": "NOVA",
 	"movistar_nombre": "Nova",
@@ -982,7 +982,7 @@ const cadenasFavoritos = [
 	"tvh_tag": ""
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.3.31:8208",
 	"movistar_id": "MEGA",
 	"movistar_nombre": "Mega",
@@ -993,7 +993,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "SD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.169:58169",
 	"movistar_id": "BEMAD",
 	"movistar_nombre": "BE MAD",
@@ -1026,7 +1026,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "SD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "231.0.0.114:1234",
 	"movistar_id": "BABY",
 	"movistar_nombre": "Baby TV",
@@ -1038,7 +1038,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Dibujos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "231.0.0.??:1234",
 	"movistar_id": "PLAYDC",
 	"movistar_nombre": "Disney Junior",
@@ -1050,7 +1050,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Dibujos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.0.117:8208",
 	"movistar_id": "PANDA",
 	"movistar_nombre": "Canal Panda",
@@ -1062,7 +1062,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "SD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "231.0.0.130:1234",
 	"movistar_id": "NICKJR",
 	"movistar_nombre": "NICK JR",
@@ -1074,7 +1074,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Dibujos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "231.0.0.131:1234",
 	"movistar_id": "NICK",
 	"movistar_nombre": "Nickelodeon",
@@ -1086,7 +1086,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Dibujos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.0.0.11:8208",
 	"movistar_id": "DCHXD",
 	"movistar_nombre": "Disney XD",
@@ -1098,7 +1098,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "SD|Favoritos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.157:58157",
 	"movistar_id": "DCH",
 	"movistar_nombre": "Disney Channel",
@@ -1110,7 +1110,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Dibujos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.167:58167",
 	"movistar_id": "BOING",
 	"movistar_nombre": "Boing",
@@ -1122,7 +1122,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Dibujos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.123.123.164:58164",
 	"movistar_id": "CLANTV",
 	"movistar_nombre": "Clan TVE",
@@ -1526,7 +1526,7 @@ const cadenasFavoritos = [
 	"tvh_tag": "Dibujos"
 },
 {
-	"movistar_epg": true,
+	"movistar_epg": false,
 	"movistar_fuente": "239.120.5.250:8208",
 	"movistar_id": "ESPORT",
 	"movistar_nombre": "M. eSports",

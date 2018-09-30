@@ -19,7 +19,6 @@ const movistar = {
 	// create all the items that I've passed.
 	//
 	requestEPG: function (progPreferences) {
-
 		// Aseguremos...
 		if (!progPreferences || !progPreferences.urlMovistar ||
 		!progPreferences.cadenasHOME || !progPreferences.diasInicioFin) {
@@ -33,28 +32,42 @@ const movistar = {
 			if (cadena.movistar_epg) {
 				arrayCadenas.push(cadena.movistar_id)
 			}
+			if (cadena.tvh_m3u){
+				progPreferences.generaM3U = true;
+			}
 		});
+		
 
 		// Preparo la petición
 		let options = {
 			method: 'POST',
 			uri: progPreferences.urlMovistar,
-			form: {
-				fechaInicio: progPreferences.diasInicioFin.fechaInicio,
-				fechaFin: progPreferences.diasInicioFin.fechaFin,
-				genero: '0',
-				selPredefinicion: '0',
-				formato: 'xml',
-				cadena: arrayCadenas,
+			formData: {
+				'action': 'export_programation',
+				'export-date-from': progPreferences.diasInicioFin.fechaInicio,
+				'export-date-to': progPreferences.diasInicioFin.fechaFin,
+				'export-gender': '',
+				'export-format': 'xml',
+				'export-filters': '',
+				'categoriesExport[]': arrayCadenas.toString(),
+				'channelsExport[]': arrayCadenas
+				
 			},
 			headers: {
-				/* 'content-type': 'application/x-www-form-urlencoded' */ // Set automatically
+				/*'origin': 'http://comunicacion.movistarplus.es',
+				'connection': 'keep-alive',
+				'cache-control': 'max-age=0',
+				'upgrade-insecure-requests': '1',
+				'content-type': 'application/x-www-form-urlencoded',
+				'user-agent': 'Mozilla/5.0 (Windows NT10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36',
+				'referer': 'http://comunicacion.movistarplus.es/programacion/'*/
 			},
-			resolveWithFullResponse: true,
+			resolveWithFullResponse: true
 		}
+		
 
 		// Realizamos la petición
-		console.log(`  => Se solicita el EPG para ${options.form.cadena.length} canales`)
+	  console.log(`  => Se solicita el EPG para ${arrayCadenas.length} canales ${arrayCadenas}`)
 		return new Promise((resolve, reject) => {
 			rp(options)
 			.then((response) => {
